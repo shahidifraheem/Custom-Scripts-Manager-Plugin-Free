@@ -30,12 +30,10 @@ class CSM_Database
      * Plugin activation hook - creates the database table
      * @return bool|WP_Error True on success, WP_Error on failure
      */
-    public static function activate()
+    public static function csm_activate()
     {
         // Ensure no output during activation
-        ob_start();
         $result = self::csm_create_table();
-        ob_end_clean();
         return $result;
     }
 

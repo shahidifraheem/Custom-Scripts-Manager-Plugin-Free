@@ -1,5 +1,5 @@
 === Custom Scripts Manager ===
-Contributors: yourname
+Contributors: shahidifraheem
 Tags: scripts, css, javascript, header, footer
 Requires at least: 6.0
 Tested up to: 6.8

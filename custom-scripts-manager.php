@@ -45,18 +45,20 @@ add_action('plugins_loaded', 'csm_init_plugin');
  */
 function csm_activate_plugin()
 {
-    // Clean output buffers
-    while (ob_get_level() > 0) {
-        ob_end_clean();
+    // Clean only if buffer is active
+    if (ob_get_level()) {
+        @ob_end_clean(); // Suppress notice if already empty
     }
 
     // Initialize database
-    $result = CSM_Database::activate();
+    $result = CSM_Database::csm_activate();
 
     if (is_wp_error($result)) {
-        // Handle activation error if needed
+        deactivate_plugins(plugin_basename(__FILE__));
+        wp_die($result->get_error_message());
     }
 }
+
 
 /**
  * Initialize plugin components
@@ -74,3 +76,14 @@ function csm_init_plugin()
     }
 }
 
+// Register uninstall hook
+register_uninstall_hook(__FILE__, 'csm_uninstall_plugin');
+
+/**
+ * Handle plugin uninstallation
+ */
+function csm_uninstall_plugin()
+{
+    // This is just a fallback, the real work happens in uninstall.php
+    // We define it here to prevent errors if someone calls the function directly
+}
